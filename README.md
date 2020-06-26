@@ -74,9 +74,6 @@ Write unit and e2e tests.
 ```bash
 # build and watch
 npm run watch
-
-# serve with hot reloading
-npm run hot
 ```
 
 #### Production
@@ -85,10 +82,6 @@ npm run hot
 npm run production
 ```
 
-## Email Verification
+## License
 
-To enable email verification make sure that your `App\User` model implements the `Illuminate\Contracts\Auth\MustVerifyEmail` contract.
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+This project is open-sourced software licensed under the MIT license.
