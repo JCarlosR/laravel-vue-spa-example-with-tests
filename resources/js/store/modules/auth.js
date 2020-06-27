@@ -46,7 +46,7 @@ export const mutations = {
 // actions
 export const actions = {
     saveToken({commit, dispatch}, payload) {
-        commit(types.SAVE_TOKEN, payload)
+        commit(types.SAVE_TOKEN, payload);
     },
 
     async fetchUser({commit}) {
@@ -59,8 +59,10 @@ export const actions = {
         }
     },
 
-    updateUser({commit}, payload) {
-        commit(types.UPDATE_USER, payload)
+    async updateUser({commit}, patchProfilePromise) {
+        const {data} = await patchProfilePromise;
+        
+        commit(types.UPDATE_USER, {user: data});
     },
 
     async logout({commit}) {
