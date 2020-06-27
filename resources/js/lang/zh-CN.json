@@ -16,6 +16,8 @@
     "forgot_password": "忘记密码？",
     "confirm_password": "重复密码",
     "name": "用户名",
+    "working_hours": "Working hours",
+    "working_hours_hint": "Your preferred working hours per day.",
     "toggle_navigation": "切换导航",
     "home": "首页",
     "you_are_logged_in": "您已经登录!",

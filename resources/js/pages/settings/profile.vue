@@ -23,6 +23,17 @@
                 </div>
             </div>
 
+            <!-- Working hours -->
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label text-md-right">{{ $t('working_hours') }}</label>
+                <div class="col-md-7">
+                    <input v-model="form.working_hours" :class="{ 'is-invalid': form.errors.has('working_hours') }" class="form-control"
+                           type="number" name="working_hours" min="1" step="1" max="10">
+                    <has-error :form="form" field="working_hours"/>
+                    <p class="text-muted">{{ $t('working_hours_hint') }}</p>
+                </div>
+            </div>
+
             <!-- Submit Button -->
             <div class="form-group row">
                 <div class="col-md-9 ml-md-auto">
@@ -49,7 +60,8 @@
         data: () => ({
             form: new Form({
                 name: '',
-                email: ''
+                email: '',
+                working_hours: ''
             })
         }),
 

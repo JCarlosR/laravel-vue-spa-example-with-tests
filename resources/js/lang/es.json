@@ -16,6 +16,8 @@
     "forgot_password": "¿Olvidaste tu contraseña?",
     "confirm_password": "Confirmar Contraseña",
     "name": "Nombre",
+    "working_hours": "Horas de trabajo",
+    "working_hours_hint": "Tus horas de trabajo preferidas por día.",
     "toggle_navigation": "Cambiar Navegación",
     "home": "Inicio",
     "you_are_logged_in": "¡Has iniciado sesión!",

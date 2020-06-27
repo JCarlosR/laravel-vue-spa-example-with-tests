@@ -23,9 +23,10 @@ class ProfileController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$user->id,
+            'working_hours' => 'integer|min:1|max:10'
         ]);
 
         // https://laravel.com/docs/7.x/helpers#method-tap
-        return tap($user)->update($request->only('name', 'email'));
+        return tap($user)->update($request->only('name', 'email', 'working_hours'));
     }
 }
