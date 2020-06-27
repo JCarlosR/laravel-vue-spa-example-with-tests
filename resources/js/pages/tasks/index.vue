@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-md-3">
-            <card :title="$t('settings')" class="menu-card">
+            <card :title="$t('my_tasks')" class="menu-card">
                 <ul class="nav flex-column nav-pills">
                     <li v-for="tab in tabs" :key="tab.route" class="nav-item">
                         <router-link :to="{ name: tab.route }" class="nav-link" active-class="active">
@@ -29,17 +29,21 @@
             tabs() {
                 return [
                     {
-                        icon: 'user',
-                        name: this.$t('profile'),
-                        route: 'settings.profile'
+                        icon: 'calendar-day',
+                        name: this.$t('today'),
+                        route: 'tasks.today'
                     },
                     {
-                        icon: 'lock',
-                        name: this.$t('password'),
-                        route: 'settings.password'
+                        icon: 'calendar',
+                        name: this.$t('history'),
+                        route: 'tasks.history'
                     }
                 ]
             }
         }
     }
 </script>
+
+<style>
+    
+</style>

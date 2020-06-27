@@ -152,7 +152,7 @@ function resolveComponents(components) {
  * @return {Array}
  */
 function getMiddleware(components) {
-    const middleware = [...globalMiddleware]
+    const middleware = [...globalMiddleware];
 
     components.filter(c => c.middleware).forEach(component => {
         if (Array.isArray(component.middleware)) {

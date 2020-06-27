@@ -12,7 +12,15 @@ export default [
     { path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue') },
     { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue') },
     
-    { path: '/home', name: 'home', component: page('home.vue') },
+    {
+        path: '/tasks',
+        component: page('tasks/index.vue'),
+        children: [
+            { path: '', redirect: { name: 'tasks.today' } },
+            { path: 'today', name: 'tasks.today', component: page('tasks/today.vue') },
+            { path: 'history', name: 'tasks.history', component: page('tasks/history.vue') }
+        ]
+    },
     
     { 
         path: '/settings',

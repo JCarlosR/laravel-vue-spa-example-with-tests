@@ -8,7 +8,7 @@
     "login": "Iniciar sesión",
     "register": "Registro",
     "page_not_found": "Página no encontrada",
-    "go_home": "Ir a Inicio",
+    "go_home": "Ir al Inicio",
     "logout": "Cerrar sesión",
     "email": "Correo electrónico",
     "remember_me": "Recuérdame",
@@ -19,7 +19,6 @@
     "working_hours": "Horas de trabajo",
     "working_hours_hint": "Tus horas de trabajo preferidas por día.",
     "toggle_navigation": "Cambiar Navegación",
-    "home": "Inicio",
     "you_are_logged_in": "¡Has iniciado sesión!",
     "reset_password": "Restablecer contraseña",
     "send_password_reset_link": "Enviar enlace para cambiar de contraseña",
@@ -37,5 +36,12 @@
     "send_verification_link": "Enviar link de verificación",
     "resend_verification_link": "¿Volver a enviar link?",
     "failed_to_verify_email": "No se pudo realizar la verificación de email.",
-    "verify_email_address": "Te enviamos un correo con un link de verificación."
+    "verify_email_address": "Te enviamos un correo con un link de verificación.",
+
+    "menu": "Menú",
+    "today": "Hoy",
+    "my_tasks": "Mis Tareas",
+    "history": "Historial",
+    "card_title_today": "Tus tareas el día de hoy",
+    "card_title_history": "Todas tus tareas registradas"
 }

@@ -89,8 +89,8 @@
                 // Fetch the user.
                 await this.$store.dispatch('auth/fetchUser');
 
-                // Redirect home.
-                this.$router.push({name: 'home'});
+                // Go to tasks for today.
+                this.$router.push({name: 'tasks.today'});
             }
         }
     }
