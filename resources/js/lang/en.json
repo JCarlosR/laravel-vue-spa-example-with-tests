@@ -43,5 +43,6 @@
     "my_tasks": "My Tasks",
     "history": "History",
     "card_title_today": "Your today's tasks",
-    "card_title_history": "All of your registered tasks"
+    "card_title_history": "All of your registered tasks",
+    "btn_add_task": "Add a new task"
 }
