@@ -18,7 +18,8 @@ export default [
         children: [
             { path: '', redirect: { name: 'tasks.today' } },
             { path: 'today', name: 'tasks.today', component: page('tasks/today.vue') },
-            { path: 'history', name: 'tasks.history', component: page('tasks/history.vue') }
+            { path: 'history', name: 'tasks.history', component: page('tasks/history.vue') },
+            { path: 'history/:date', name: 'tasks.date', component: page('tasks/date.vue') },
         ]
     },
     

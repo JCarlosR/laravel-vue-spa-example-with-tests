@@ -36,7 +36,9 @@
         middleware: 'guest',
 
         metaInfo() {
-            return {title: this.$t('reset_password')}
+            return {
+                title: this.$t('reset_password')
+            }
         },
 
         data: () => ({

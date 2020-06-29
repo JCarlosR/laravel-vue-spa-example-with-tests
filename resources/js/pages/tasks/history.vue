@@ -37,9 +37,9 @@
                 <td>{{ taskDate.date }}</td>
                 <td>{{ taskDate.count }}</td>
                 <td>
-                    <a :href="taskDate.id" class="btn btn-secondary btn-sm">
+                    <router-link :to="{ name: 'tasks.date', params: {date: taskDate.date} }" class="btn btn-secondary btn-sm">
                         <fa icon="info" fixed-width/>
-                    </a>             
+                    </router-link>             
                 </td>
             </tr>
             </tbody>
