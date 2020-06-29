@@ -40,27 +40,7 @@
         
         <p v-if="loadingTasks">Loading tasks ...</p>
         
-        <table v-else-if="tasks" class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Task title</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="task in tasks">
-                <td>{{ task.title }}</td>
-                <td>
-                    <a href="" class="btn btn-primary btn-sm">
-                        <fa icon="edit" fixed-width/>
-                    </a>
-                    <a href="" class="btn btn-danger btn-sm">
-                        <fa icon="trash" fixed-width/>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <task-table v-else-if="tasks.length > 0" :tasks="tasks" />
         
         <p v-else>You haven't registered any task yet.</p>
     </card>
@@ -70,9 +50,11 @@
     import Modal from "../../components/Modal";
     import Form from "vform";
     import axios from "axios";
+    import TaskTable from "../../components/TaskTable";
     
     export default {
         components: {
+            TaskTable,
             Modal
         },
         middleware: 'auth',

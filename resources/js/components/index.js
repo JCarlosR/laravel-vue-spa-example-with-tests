@@ -5,6 +5,7 @@ import Button from './Button'
 import Modal from './Modal'
 import Checkbox from './Checkbox'
 import { HasError, AlertError, AlertSuccess } from 'vform'
+import TaskTable from "./TaskTable";
 
 // Components that are registered globaly.
 [
@@ -15,7 +16,9 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
     Checkbox,
     HasError,
     AlertError,
-    AlertSuccess
+    AlertSuccess,
+    
+    TaskTable
 ].forEach(Component => {
-    Vue.component(Component.name, Component)
+    Vue.component(Component.name, Component);
 });
