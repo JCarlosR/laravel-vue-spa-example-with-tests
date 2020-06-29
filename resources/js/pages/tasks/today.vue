@@ -38,7 +38,9 @@
             </form>         
         </modal>
         
-        <table class="table table-bordered">
+        <p v-if="loadingTasks">Loading tasks ...</p>
+        
+        <table v-else-if="tasks" class="table table-bordered">
             <thead>
             <tr>
                 <th>Task title</th>
@@ -60,12 +62,14 @@
             </tbody>
         </table>
         
+        <p v-else>You haven't registered any task yet.</p>
     </card>
 </template>
 
 <script>
     import Modal from "../../components/Modal";
     import Form from "vform";
+    import axios from "axios";
     
     export default {
         components: {
@@ -76,20 +80,8 @@
         data() {
             return {
                 tasks: [
-                    {
-                        id: 1,
-                        title: 'Task 1'
-                    },
-                    {
-                        id: 2,
-                        title: 'Task 2'
-                    },
-                    {
-                        id: 3,
-                        title: 'Task 3'
-                    }
                 ],
-                loadingTasks: false,
+                loadingTasks: true,
 
 
                 form: new Form({
@@ -110,6 +102,13 @@
             postTask() {
                 console.log('a post request to the server');
             }
+        },
+        
+        async mounted() {
+            const {data} = await axios.get('/api/tasks');
+            
+            this.tasks = data;
+            this.loadingTasks = false;
         }
     }
 </script>

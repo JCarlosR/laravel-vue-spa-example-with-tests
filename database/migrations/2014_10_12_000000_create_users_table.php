@@ -22,6 +22,9 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->unsignedSmallInteger('working_hours')->nullable();
             
+            // roles: regular 'user', user 'manager', 'admin'
+            $table->string('role')->default('user');
+            
             $table->rememberToken();
             $table->timestamps();
         });
