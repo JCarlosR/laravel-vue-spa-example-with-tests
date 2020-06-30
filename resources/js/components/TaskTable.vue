@@ -12,12 +12,12 @@
             <td>{{ task.title }}</td>
             <td>{{ task.duration }}</td>
             <td>
-                <a href="" class="btn btn-primary btn-sm">
+                <v-button type="primary" small @click.native="$emit('edit', task)">
                     <fa icon="edit" fixed-width/>
-                </a>
-                <a href="" class="btn btn-danger btn-sm">
+                </v-button>
+                <v-button type="danger" small @click.native="$emit('delete', task)">
                     <fa icon="trash" fixed-width/>
-                </a>
+                </v-button>
             </td>
         </tr>
         </tbody>
@@ -25,9 +25,10 @@
 </template>
 
 <script>
+    import VButton from "./Button";
     export default {
         name: 'TaskTable',
-
+        components: {VButton},
         props: {
             tasks: {
                 type: Array,

@@ -1,11 +1,11 @@
 <template>
     <card :title="$t('card_title_today')">
         
-        <v-button :loading="loadingTasks" class="mb-2" data-toggle="modal" data-target="#modalAddTask">
+        <v-button :loading="loadingTasks" class="mb-2" @click.native="showModal = true">
             {{ $t('btn_add_task') }}
         </v-button>
         
-        <modal id="modalAddTask" title="New task" :has-footer="false">
+        <v-modal :title="modalTitle" :has-footer="false" :show="showModal" @close="onCloseModal">
             <form @submit.prevent="postTask" @keydown="form.onKeydown($event)">
                 <alert-success :form="form" :message="status"/>
                 
@@ -38,11 +38,11 @@
                     Confirm
                 </v-button>
             </form>         
-        </modal>
+        </v-modal>
         
         <p v-if="loadingTasks">Loading tasks ...</p>
         
-        <task-table v-else-if="tasks.length > 0" :tasks="tasks" />
+        <task-table v-else-if="tasks.length > 0" :tasks="tasks" @edit="editTask" />
         
         <p v-else>You haven't registered any task yet.</p>
     </card>
@@ -50,9 +50,9 @@
 
 <script>
     import Modal from "../../components/Modal";
+    import TaskTable from "../../components/TaskTable";
     import Form from "vform";
     import axios from "axios";
-    import TaskTable from "../../components/TaskTable";
     
     export default {
         components: {
@@ -61,8 +61,19 @@
         },
         middleware: 'auth',
         
+        computed: {
+            modalTitle() {
+                if (this.editTaskId) 
+                    return 'Edit task #' + this.editTaskId;
+                
+                return 'New task';
+            }
+        },
+        
         data() {
             return {
+                showModal: false,
+                editTaskId: null,
                 tasks: [
                 ],
                 loadingTasks: true,
@@ -90,6 +101,25 @@
                 this.form.reset();
 
                 this.status = 'The task has been registered successfully.';
+            },
+            
+            editTask(task) {
+                this.editTaskId = task.id;
+                
+                this.form.fill(task);
+                                
+                this.showModal = true;                
+            },
+            
+            async updateTask() {
+                
+            },
+            
+            onCloseModal() {
+                this.form.reset();
+                this.editTaskId = null;
+                
+                this.showModal = false;
             }
         },
         

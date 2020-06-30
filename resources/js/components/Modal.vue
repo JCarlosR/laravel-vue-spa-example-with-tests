@@ -1,10 +1,10 @@
 <template>
-    <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" tabindex="-1" role="dialog" v-show="this.show" @click="this.close">
+        <div class="modal-dialog" role="document" @click.stop>
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">{{ title }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" @click="close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -13,7 +13,7 @@
                 </div>
                 <div v-if="hasFooter" class="modal-footer">
                     <slot name="footer" />
-                    <button v-if="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <button v-if="closeButton" type="button" @click="close">
                         Close
                     </button>
                 </div>
@@ -23,8 +23,10 @@
 </template>
 
 <script>
+    import Modal from 'bootstrap/js/src/modal';
+    
     export default {
-        name: 'Modal',
+        name: 'VModal',
                 
         props: {            
             loading: {
@@ -41,8 +43,73 @@
             },
             title: {
                 type: String
+            },
+            show: {
+                type: Boolean,
+                default: false
+            },
+            onOpen: {
+                type: Function,
+                default: null
+            },
+            onClose: {
+                type: Function,
+                default: null
+            }
+        },
+
+        watch: {
+            // Watch for a change in show, so we can call for open or close
+            show(value) {
+                if (value) {
+                    this.open()
+                } else if (!value) {
+                    this.close()
+                }
+            }
+        },
+
+        beforeDestroy() {
+            document.removeEventListener('keydown', this.handleKeydown);
+            if (this.isDef(this.modalInstance)) {
+                this.modalInstance.dispose();
+                this.modalInstance = null;
+            }
+        },
+
+
+        mounted() {
+            this.modalInstance = new Modal(this.$el);
+            
+            // If the esc button is typed, close modal
+            document.addEventListener('keydown', this.handleKeydown);
+        },
+        data() {
+            return {
+                modalInstance: null,
+            };
+        },
+
+
+        methods: {
+            handleKeydown(e) {
+                if (this.show && e.keyCode === 27) {
+                    this.close();
+                }
+            },
+            close() {
+                if (this.isDef(this.modalInstance)) {
+                    this.modalInstance.hide();
+                }
+                
+                this.$emit('close');
+            },
+            open() {
+                this.modalInstance.show();
+            },
+            isDef(obj) {
+                return typeof obj !== undefined && obj !== null;
             }
         }
     }
 </script>
-

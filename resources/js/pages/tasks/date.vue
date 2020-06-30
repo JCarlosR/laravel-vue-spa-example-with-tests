@@ -5,7 +5,7 @@
             {{ $t('btn_add_task') }}
         </v-button>
         
-        <modal id="modalAddTask" title="New task" :has-footer="false">
+        <v-modal id="modalAddTask" title="New task" :has-footer="false">
             <form @submit.prevent="postTask" @keydown="form.onKeydown($event)">
                 <!-- Title -->
                 <div class="form-group">
@@ -36,7 +36,7 @@
                     Confirm
                 </v-button>
             </form>         
-        </modal>
+        </v-modal>
 
         <p v-if="loadingTasks">Loading tasks ...</p>
 
