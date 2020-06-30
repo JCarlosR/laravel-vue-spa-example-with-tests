@@ -34,15 +34,16 @@ class TaskDateController extends Controller
         // list dates
                 
         if ($filterType === 'sevenDays') {
-            $from = Carbon::now();
-            $to = (clone $from)->subDays(6); // because the current date is included
+            $from = (Carbon::now())->endOfDay();
+            $to = (clone $from)->subDays(6) // because the current date is included
+                ->startOfDay(); 
         } elseif ($filterType === 'thisMonth') {
-            $from = new Carbon('last day of this month');
+            $from = (new Carbon('last day of this month'))->endOfDay();
             $to = (new Carbon('first day of this month'))->startOfDay();
         } else { // custom
             // swap because we show in DESC order from the latter date
-            $from = Carbon::parse($validatedData['to']);
-            $to = Carbon::parse($validatedData['from']);
+            $from = Carbon::parse($validatedData['to'])->endOfDay();
+            $to = Carbon::parse($validatedData['from'])->startOfDay();
         }
         
         $groupedTasks = Task::whereBetween('date', [$to, $from])

@@ -28,7 +28,7 @@
 <script>
     import axios from 'axios'
 
-    const qs = (params) => Object.keys(params).map(key => `${key}=${params[key]}`).join('&')
+    const qs = (params) => Object.keys(params).map(key => `${key}=${params[key]}`).join('&');
 
     export default {
         middleware: 'guest',

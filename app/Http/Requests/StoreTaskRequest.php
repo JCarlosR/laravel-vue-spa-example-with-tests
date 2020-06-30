@@ -28,8 +28,8 @@ class StoreTaskRequest extends FormRequest
             'title' => 'required|min:3|max:120', 
             'description' => 'max:1200', 
             'duration' => 'integer|min:1|max:600', 
-            // 'user_id' => 'required|exists:users,id', 
-            'date' => 'date_format:Y-m-d'
+            // 'user_id' => 'required|exists:users,id', // this is the authenticated user via token
+            'date' => 'nullable|date_format:Y-m-d' // if empty, it'll use today
         ];
     }
 }
