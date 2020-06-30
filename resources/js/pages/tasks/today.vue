@@ -7,6 +7,8 @@
         
         <modal id="modalAddTask" title="New task" :has-footer="false">
             <form @submit.prevent="postTask" @keydown="form.onKeydown($event)">
+                <alert-success :form="form" :message="status"/>
+                
                 <!-- Title -->
                 <div class="form-group">
                     <label for="title">Task title</label>
@@ -65,12 +67,12 @@
                 ],
                 loadingTasks: true,
 
-
+                status: '',
                 form: new Form({
                     title: '',
                     description: '',
                     duration: 5
-                }),
+                })
             };
         },
 
@@ -81,8 +83,13 @@
         },
         
         methods: {
-            postTask() {
-                console.log('a post request to the server');
+            async postTask() {
+                const {data} = await this.form.post('/api/tasks');
+                
+                this.tasks.push(data);
+                this.form.reset();
+
+                this.status = 'The task has been registered successfully.';
             }
         },
         

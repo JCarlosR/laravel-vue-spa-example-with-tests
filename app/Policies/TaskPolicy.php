@@ -11,17 +11,13 @@ class TaskPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any models.
+     * Every user can list tasks, as long as they are the owners.
      *
-     * @param  User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny()
     {
-        return in_array($user->role, [
-            User::ROLE_ADMIN,
-            User::ROLE_USER_MANAGER
-        ]);
+        return true;
     }
 
     /**
