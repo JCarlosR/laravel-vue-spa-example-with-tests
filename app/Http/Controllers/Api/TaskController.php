@@ -29,7 +29,9 @@ class TaskController extends Controller
     {
         $date = $request->input('date', date('Y-m-d'));
         
-        return TaskResource::collection(Task::where('date', $date)->get());
+        return TaskResource::collection(
+            Task::where('date', $date)->where('user_id', auth()->id())->get()
+        );
     }
 
     /**
@@ -53,12 +55,12 @@ class TaskController extends Controller
     /**
      * Display the specified task.
      *
-     * @param  int  $id
-     * @return Response
+     * @param Task $task
+     * @return Task
      */
-    public function show($id)
+    public function show(Task $task)
     {
-        return Task::findOrFail($id);
+        return $task;
     }
 
     /**

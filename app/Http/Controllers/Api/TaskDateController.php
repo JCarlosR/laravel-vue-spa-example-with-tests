@@ -47,6 +47,7 @@ class TaskDateController extends Controller
         }
         
         $groupedTasks = Task::whereBetween('date', [$to, $from])
+            ->where('user_id', auth()->id())
             ->groupBy('date')
             ->get([
                 'date', DB::raw('COUNT(id) as count')
