@@ -3,12 +3,14 @@
         <thead>
         <tr>
             <th>Task title</th>
+            <th>Duration <small>in minutes</small></th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="task in tasks">
             <td>{{ task.title }}</td>
+            <td>{{ task.duration }}</td>
             <td>
                 <a href="" class="btn btn-primary btn-sm">
                     <fa icon="edit" fixed-width/>

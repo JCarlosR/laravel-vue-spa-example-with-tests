@@ -91,8 +91,7 @@
             }
         },
 
-        async mounted() {
-            
+        async mounted() {            
             const url = `/api/tasks?date=${this.$route.params.date}`;
             const {data} = await axios.get(url);
 

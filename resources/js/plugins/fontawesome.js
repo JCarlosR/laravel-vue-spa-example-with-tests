@@ -5,7 +5,8 @@ import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import {
     faUser, faLock, faSignOutAlt, faCog, 
     faCalendar, faCalendarDay,
-    faInfo, faEdit, faTrash, faFileExport
+    faInfo, faEdit, faTrash, 
+    faFileExport, faSearch
 } from '@fortawesome/free-solid-svg-icons'
 
 /*import {
@@ -15,7 +16,8 @@ import {
 library.add(
     faUser, faLock, faSignOutAlt, faCog, 
     faCalendar, faCalendarDay,
-    faInfo, faEdit, faTrash, faFileExport
+    faInfo, faEdit, faTrash,
+    faFileExport, faSearch
 );
 
 Vue.component('fa', FontAwesomeIcon);

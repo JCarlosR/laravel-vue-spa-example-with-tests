@@ -17,6 +17,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
     Route::apiResource('tasks', 'Api\TaskController');
+    Route::get('dates', 'Api\TaskDateController@index');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
