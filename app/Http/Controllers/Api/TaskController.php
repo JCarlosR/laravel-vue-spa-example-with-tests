@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Resources\Task as TaskResource;
 use App\Models\Task;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -64,16 +65,14 @@ class TaskController extends Controller
      * Update the specified task.
      *
      * @param Request $request
-     * @param  int  $id
-     * @return Response
+     * @param Task $task
+     * @return Task
      */
-    public function update(Request $request, $id)
-    {
-        $task = Task::findOrFail($id);
-        
-        $task->update([
+    public function update(Request $request, Task $task)
+    {        
+        $task->update(
             $request->only('title', 'description', 'duration')
-        ]);
+        );
         
         return $task;
     }
@@ -81,13 +80,12 @@ class TaskController extends Controller
     /**
      * Remove the specified task.
      *
-     * @param  int  $id
-     * @return Response
+     * @param Task $task
+     * @return bool|null
+     * @throws Exception
      */
-    public function destroy($id)
-    {
-        $task = Task::findOrFail($id);
-        
+    public function destroy(Task $task)
+    {        
         return $task->delete();
     }
 }

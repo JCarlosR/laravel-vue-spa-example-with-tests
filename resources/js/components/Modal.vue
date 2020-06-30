@@ -47,14 +47,6 @@
             show: {
                 type: Boolean,
                 default: false
-            },
-            onOpen: {
-                type: Function,
-                default: null
-            },
-            onClose: {
-                type: Function,
-                default: null
             }
         },
 
@@ -89,8 +81,7 @@
                 modalInstance: null,
             };
         },
-
-
+        
         methods: {
             handleKeydown(e) {
                 if (this.show && e.keyCode === 27) {

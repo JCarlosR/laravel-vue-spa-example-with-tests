@@ -43,7 +43,7 @@ class TaskPolicy
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user can update the task.
      *
      * @param User $user
      * @param Task $task

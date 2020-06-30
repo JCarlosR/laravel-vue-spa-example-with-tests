@@ -6,7 +6,7 @@
         </v-button>
         
         <v-modal :title="modalTitle" :has-footer="false" :show="showModal" @close="onCloseModal">
-            <form @submit.prevent="postTask" @keydown="form.onKeydown($event)">
+            <form @submit.prevent="onSubmitForm" @keydown="form.onKeydown($event)">
                 <alert-success :form="form" :message="status"/>
                 
                 <!-- Title -->
@@ -42,7 +42,7 @@
         
         <p v-if="loadingTasks">Loading tasks ...</p>
         
-        <task-table v-else-if="tasks.length > 0" :tasks="tasks" @edit="editTask" />
+        <task-table v-else-if="tasks.length > 0" :tasks="tasks" @edit="editTask" @delete="deleteTaskConfirmation" />
         
         <p v-else>You haven't registered any task yet.</p>
     </card>
@@ -53,6 +53,7 @@
     import TaskTable from "../../components/TaskTable";
     import Form from "vform";
     import axios from "axios";
+    import Swal from 'sweetalert2'
     
     export default {
         components: {
@@ -94,6 +95,14 @@
         },
         
         methods: {
+            onSubmitForm() {
+                if (this.editTaskId) {
+                    this.updateTask();   
+                } else {
+                    this.postTask();    
+                }                
+            },
+            
             async postTask() {
                 const {data} = await this.form.post('/api/tasks');
                 
@@ -112,7 +121,44 @@
             },
             
             async updateTask() {
+                const {data} = await this.form.put(`/api/tasks/${this.editTaskId}`);
+
+                const taskIndex = this.tasks.findIndex(task => task.id === this.editTaskId);
                 
+                this.$set(this.tasks, taskIndex, data);
+
+                this.status = 'The task has been updated successfully.';
+            },
+
+            deleteTaskConfirmation(task) {                
+                const htmlMessage = `The following task will be deleted: <strong>${task.title}</strong>`;
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    html: htmlMessage,
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it'
+                }).then((result) => {
+                    if (result.value) {
+                        this.deleteTask(task.id);
+                    }
+                })
+            },
+            
+            async deleteTask(taskId) {
+                const {data} = await axios.delete(`/api/tasks/${taskId}`);
+                
+                if (data) {
+                    const taskIndex = this.tasks.findIndex(task => task.id === taskId);
+                    this.$delete(this.tasks, taskIndex);
+                    
+                    await Swal.fire(
+                        'Deleted!',
+                        'The selected task has been deleted.',
+                        'success'
+                    );
+                }                
             },
             
             onCloseModal() {
