@@ -1,14 +1,14 @@
 <template>
-    <task-date :title="cardTitle" :date="$route.params.date" />
+    <task-section :title="cardTitle" :date="$route.params.date" />
 </template>
 
 <script>
-    import TaskDate from "../../components/TaskDate";
-    import {isValidDate, isToday} from "../../utils/dates";
+    import {isToday, isValidDate} from "../../../utils/dates";
+    import TaskSection from "../../../components/TaskSection";
 
     export default {
         components: {
-            TaskDate
+            TaskSection
         },
         middleware: 'auth',
         

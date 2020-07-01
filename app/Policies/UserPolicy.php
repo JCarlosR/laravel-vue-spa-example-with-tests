@@ -24,7 +24,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $this->rolesThatManageUsers;
+        return in_array($user->role, $this->rolesThatManageUsers);
     }
 
     /**

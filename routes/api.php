@@ -18,6 +18,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::apiResource('tasks', 'Api\TaskController');
     Route::get('dates', 'Api\TaskDateController@index');
+
+    Route::apiResource('users', 'Api\UserController');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

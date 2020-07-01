@@ -43,5 +43,10 @@
     "my_tasks": "Mis Tareas",
     "history": "Historial",
     "card_title_today": "Tus tareas el día de hoy",
-    "card_title_history": "Todas tus tareas registradas"
+    "card_title_history": "Todas tus tareas registradas",
+    "btn_add_task": "Agregar una nueva tarea",
+
+    "management": "Gestión",
+    "users": "Usuarios",
+    "btn_add_user": "Registrar un nuevo usuario"
 }

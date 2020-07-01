@@ -14,12 +14,21 @@ export default [
     
     {
         path: '/tasks',
-        component: page('tasks/index.vue'),
+        component: page('panel/index.vue'),
         children: [
             { path: '', redirect: { name: 'tasks.today' } },
-            { path: 'today', name: 'tasks.today', component: page('tasks/today.vue') },
-            { path: 'history', name: 'tasks.history', component: page('tasks/history.vue') },
-            { path: 'history/:date', name: 'tasks.date', component: page('tasks/date.vue') },
+            { path: 'today', name: 'tasks.today', component: page('panel/tasks/today.vue') },
+            { path: 'history', name: 'tasks.history', component: page('panel/tasks/history.vue') },
+            { path: 'history/:date', name: 'tasks.date', component: page('panel/tasks/date.vue') },
+        ]
+    },
+
+    {
+        path: '/management',
+        component: page('panel/index.vue'),
+        children: [
+            { path: '', redirect: { name: 'management.users' } },
+            { path: 'users', name: 'management.users', component: page('panel/management/users.vue') }
         ]
     },
     

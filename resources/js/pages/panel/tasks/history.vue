@@ -57,7 +57,7 @@
 
 <script>
     import axios from "axios";
-    import VButton from "../../components/Button";
+    import VButton from "../../../components/Button";
 
     export default {
         components: {VButton},

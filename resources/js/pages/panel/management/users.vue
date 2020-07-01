@@ -1,20 +1,20 @@
 <template>
-    <task-date :title="$t('card_title_today')" />
+    <user-section :title="$t('users')" />
 </template>
 
-<script>
-    import TaskDate from "../../components/TaskDate";
-    
+<script>    
+    import UserSection from "../../../components/UserSection";
+
     export default {
         middleware: 'auth',
         
         components: {
-            TaskDate
+            UserSection
         },
     
         metaInfo() {
             return {
-                title: this.$t('today')
+                title: this.$t('users')
             };
         },
     }
