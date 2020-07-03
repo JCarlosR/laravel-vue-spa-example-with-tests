@@ -9,29 +9,40 @@
             <form @submit.prevent="onSubmitForm" @keydown="form.onKeydown($event)">
                 <alert-success :form="form" :message="status"/>
                 
+                <p>Note: Users registered internally are automatically e-mail verified.</p>
+                
                 <!-- Name -->
                 <div class="form-group">
-                    <label for="title">User title</label>
-                    <input v-model="form.title" :class="{ 'is-invalid': form.errors.has('title') }"
-                           class="form-control" type="text" name="title" id="title">
-                    <has-error :form="form" field="title"/>
+                    <label for="name">Name</label>
+                    <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }"
+                           class="form-control" type="text" name="name" id="name">
+                    <has-error :form="form" field="name"/>
                 </div>
 
                 <!-- E-mail -->
                 <div class="form-group">
-                    <label for="description">User description</label>
-                    <textarea name="description" id="description" rows="2" class="form-control" v-model="form.description"
-                              :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-                    <has-error :form="form" field="description"/>
+                    <label for="email">E-mail</label>
+                    <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }"
+                           class="form-control" type="text" name="email" id="email">
+                    <has-error :form="form" field="email"/>
                 </div>
 
-                <!-- Duration -->
+                <!-- Password -->
                 <div class="form-group">
-                    <label for="duration">Duration <small>(in minutes)</small></label>
-                    <input v-model="form.duration" :class="{ 'is-invalid': form.errors.has('duration') }"
-                           placeholder="How long did it take?"
-                           class="form-control" type="number" step="1" name="duration" id="duration">
-                    <has-error :form="form" field="duration"/>
+                    <label for="password">Password</label>
+                    <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }"
+                           class="form-control" type="text" name="password" id="password">
+                    <has-error :form="form" field="password"/>
+                </div>
+
+                <!-- Role -->
+                <div v-if="user.role === 'admin'" class="form-group">
+                    <label for="role">Role</label>
+                    <select v-model="form.role" name="role" id="role"
+                            class="form-control" :class="{ 'is-invalid': form.errors.has('role') }">
+                        <option v-for="role in roles">{{ role }}</option>
+                    </select>
+                    <has-error :form="form" field="role"/>
                 </div>
 
                 <v-button :loading="form.busy">
@@ -56,7 +67,7 @@
     import UserTable from "./UserTable";
 
     export default {
-        name: 'UserDate',
+        name: 'UserSection',
         props: {
             title: {
                 type: String
@@ -70,6 +81,7 @@
             UserTable,
             Modal
         },
+        
 
         computed: {
             modalTitle() {
@@ -77,6 +89,9 @@
                     return 'Edit user #' + this.editUserId;
 
                 return 'New user';
+            },
+            user() {
+                return this.$store.getters['auth/user'];
             }
         },
 
@@ -90,11 +105,16 @@
 
                 status: '',
                 form: new Form({
-                    title: '',
-                    description: '',
-                    duration: 5,
-                    date: this.date
-                })
+                    name: '',
+                    email: '',
+                    password: '',
+                    password_confirmation: '',
+                    role: 'user'
+                }),
+
+                roles: [
+                    'user', 'admin', 'manager'
+                ]
             };
         },
 

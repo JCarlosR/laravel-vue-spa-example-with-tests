@@ -24,6 +24,11 @@ class StoreUserRequest extends FormRequest
      */
     public function rules()
     {
-        return User::$storeValidationRules;
+        $rules = User::$storeValidationRules;
+        
+        // Internal registration by admins & managers does not require confirmation
+        $rules['password'] = 'required|min:6';
+        
+        return $rules;
     }
 }

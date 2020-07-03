@@ -22,7 +22,8 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public static $storeValidationRules = [
         'name' => 'required|max:255',
         'email' => 'required|email|max:255|unique:users',
-        'password' => 'required|min:6|confirmed'
+        'password' => 'required|min:6|confirmed',
+        'role' => 'in:user,manager,admin'
     ];
 
     public static $updateValidationRules = [

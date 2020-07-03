@@ -41,7 +41,8 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $validated = $request->validated();
-        
+
+        $validated['password'] =  bcrypt($validated['password']);        
         $validated['email_verified_at'] = Carbon::now();
         
         return User::create($validated);
