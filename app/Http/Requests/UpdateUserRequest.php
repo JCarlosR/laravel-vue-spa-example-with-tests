@@ -15,7 +15,8 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->can('update', User::class);
+        // there is no need to check here, since the Controller is using the UserPolicy on all methods 
+        return true; 
     }
 
     /**
@@ -25,7 +26,13 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = User::$updateValidationRules;
+        $userId = $this->route('user')->id; // edited user
+        
+        $rules = [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users,email,'.$userId,
+            'password' => 'min:6'
+        ];
         
         if ($this->user()->role === User::ROLE_ADMIN) {
             $rules += [

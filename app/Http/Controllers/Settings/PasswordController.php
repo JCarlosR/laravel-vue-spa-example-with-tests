@@ -18,11 +18,11 @@ class PasswordController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|confirmed|min:6'
         ]);
 
         $request->user()->update([
-            'password' => bcrypt($request->password),
+            'password' => bcrypt($request->password)
         ]);
     }
 }

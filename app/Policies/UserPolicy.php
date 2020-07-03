@@ -14,8 +14,6 @@ class UserPolicy
         User::ROLE_USER_MANAGER
     ];
     
-    
-    
     /**
      * Determine whether the user can view any models.
      *
@@ -36,18 +34,18 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return $user->id === $model->id || 
-            in_array($user->role, $this->rolesThatManageUsers);
+        return in_array($user->role, $this->rolesThatManageUsers);
     }
 
     /**
      * Determine whether the user can create models.
      *
+     * @param User $user
      * @return mixed
      */
-    public function create()
+    public function create(User $user)
     {
-        return true;
+        return in_array($user->role, $this->rolesThatManageUsers);
     }
 
     /**
@@ -59,8 +57,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->id === $model->id ||
-            in_array($user->role, $this->rolesThatManageUsers);
+        return in_array($user->role, $this->rolesThatManageUsers);
     }
 
     /**
@@ -85,8 +82,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        return $user->id === $model->id ||
-            in_array($user->role, $this->rolesThatManageUsers);
+        return in_array($user->role, $this->rolesThatManageUsers);
     }
 
     /**

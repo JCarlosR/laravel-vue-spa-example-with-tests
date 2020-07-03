@@ -66,7 +66,7 @@ class UserController extends Controller
      * @param User $user
      * @return User
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(User $user, UpdateUserRequest $request)
     {
         $validated = $request->validated();
         

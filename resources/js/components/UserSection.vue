@@ -9,7 +9,7 @@
             <form @submit.prevent="onSubmitForm" @keydown="form.onKeydown($event)">
                 <alert-success :form="form" :message="status"/>
                 
-                <p>Note: Users registered internally are automatically e-mail verified.</p>
+                <p v-if="!editUserId">Note: Users registered internally are automatically e-mail verified.</p>
                 
                 <!-- Name -->
                 <div class="form-group">
@@ -29,7 +29,10 @@
 
                 <!-- Password -->
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">
+                        Password
+                        <small v-if="editUserId">(Only if you want to change it)</small>
+                    </label>
                     <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }"
                            class="form-control" type="text" name="password" id="password">
                     <has-error :form="form" field="password"/>
@@ -108,7 +111,6 @@
                     name: '',
                     email: '',
                     password: '',
-                    password_confirmation: '',
                     role: 'user'
                 }),
 

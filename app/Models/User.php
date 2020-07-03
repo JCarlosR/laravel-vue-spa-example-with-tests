@@ -26,12 +26,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'role' => 'in:user,manager,admin'
     ];
 
-    public static $updateValidationRules = [
-        'name' => 'required|max:255',
-        'email' => 'required|email|max:255|unique:users',
-        'password' => 'min:6'
-    ];
-
     /**
      * The attributes that are mass assignable.
      *
