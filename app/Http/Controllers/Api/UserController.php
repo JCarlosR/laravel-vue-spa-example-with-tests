@@ -89,11 +89,11 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param User $user
-     * @return void
+     * @return bool
      * @throws Exception
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        return $user->delete();
     }
 }

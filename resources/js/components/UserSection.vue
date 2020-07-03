@@ -159,7 +159,7 @@
             },
 
             deleteUserConfirmation(user) {
-                const htmlMessage = `The following user will be deleted: <strong>${user.title}</strong>`;
+                const htmlMessage = `The following user will be deleted: <strong>${user.name}</strong>`;
 
                 Swal.fire({
                     title: 'Are you sure?',
