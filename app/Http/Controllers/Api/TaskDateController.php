@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ListTaskDatesRequest;
 use App\Models\Task;
 use App\Models\TaskDateRange;
 use Carbon\Carbon;
@@ -12,38 +13,29 @@ use Illuminate\Validation\Rule;
 
 class TaskDateController extends Controller
 {
-    private $validFilterTypes = [
-        'sevenDays',
-        'thisMonth',
-        'custom'
-    ];
     
-    public function index(Request $request)
+    public function index(ListTaskDatesRequest $request)
     {
-        $validatedData = $request->validate([
-            'filterType' => [
-                'required',
-                Rule::in($this->validFilterTypes)
-            ],
-            'from' => 'required_if:filterType,custom',
-            'to' => 'required_if:filterType,custom'
-        ]);
+        $validated = $request->validated();
         
-        $filterType = $validatedData['filterType'];
+        $filterType = $validated['filterType'];
         
         // list dates
                 
         if ($filterType === 'sevenDays') {
             $from = (Carbon::now())->endOfDay();
-            $to = (clone $from)->subDays(6) // because the current date is included
+            // because the current date is included
+            $to = (clone $from)->subDays(6) 
                 ->startOfDay(); 
+            
         } elseif ($filterType === 'thisMonth') {
             $from = (new Carbon('last day of this month'))->endOfDay();
             $to = (new Carbon('first day of this month'))->startOfDay();
-        } else { // custom
+            
+        } else /*if ($filterType === 'custom')*/ {
             // swap because we show in DESC order from the latter date
-            $from = Carbon::parse($validatedData['to'])->endOfDay();
-            $to = Carbon::parse($validatedData['from'])->startOfDay();
+            $from = Carbon::parse($validated['to'])->endOfDay();
+            $to = Carbon::parse($validated['from'])->startOfDay();
         }
         
         $groupedTasks = Task::whereBetween('date', [$to, $from])

@@ -16,10 +16,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
-    Route::apiResource('tasks', 'Api\TaskController');
-    Route::get('dates', 'Api\TaskDateController@index');
-
     Route::apiResource('users', 'Api\UserController');
+    
+    Route::apiResource('tasks', 'Api\TaskController');
+    
+    Route::get('dates', 'Api\TaskDateController@index');
+    Route::get('export', 'Api\ExportController@index');  
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
