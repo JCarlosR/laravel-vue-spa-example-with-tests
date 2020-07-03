@@ -37,7 +37,9 @@
         layout: 'basic',
 
         metaInfo() {
-            return {title: this.$t('home')}
+            return {
+                title: this.$t('welcome')
+            }
         },
 
         data: () => ({

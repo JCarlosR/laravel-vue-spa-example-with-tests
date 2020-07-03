@@ -38,14 +38,22 @@ class TaskDateController extends Controller
             $to = Carbon::parse($validated['from'])->startOfDay();
         }
         
+        $user = auth()->user();
+        $preferredWorkingHours = $user->working_hours;
+        
         $groupedTasks = Task::whereBetween('date', [$to, $from])
-            ->where('user_id', auth()->id())
+            ->where('user_id', $user->id)
             ->groupBy('date')
             ->get([
-                'date', DB::raw('COUNT(id) as count')
+                'date', 
+                DB::raw('COUNT(id) as count'), 
+                DB::raw('SUM(duration) as totalMinutes')
             ])->mapWithKeys(function ($item) {
                 return [
-                    $item['date'] => $item['count']
+                    $item['date'] => [
+                        'count' => $item['count'],
+                        'totalMinutes' => $item['totalMinutes']
+                    ]
                 ];
             })->toArray();
         
@@ -55,12 +63,15 @@ class TaskDateController extends Controller
             ->setFrom($from)
             ->setTo($to);
         
-        return $dateRange->getDates()->map(function ($taskDate) use ($groupedTasks) {
-            return [
-                'date' => $taskDate,
-                'count' => 
-                    array_key_exists($taskDate, $groupedTasks) ? $groupedTasks[$taskDate] : 0
-            ];
+        return $dateRange->getDates()->map(function ($date) use ($groupedTasks) {
+            if (array_key_exists($date, $groupedTasks)) {
+                $count = (int) $groupedTasks[$date]['count'];
+                $totalMinutes = (int) $groupedTasks[$date]['totalMinutes'];
+            } else {
+                $count = $totalMinutes = 0;
+            }
+            
+            return compact('date', 'count', 'totalMinutes');
         });
     }
 }

@@ -31,19 +31,25 @@
             </div>    
         </div>    
         
+        <p v-if="!user.working_hours">
+            <strong>Note:</strong>
+            You have not configured your preferred working hours per day yet.
+        </p>
         
         <table class="table table-bordered mt-2">
             <thead>
             <tr>
                 <th>Date</th>
-                <th>#</th>
+                <th># Tasks</th>
+                <th>Total minutes</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="taskDate in  taskDates">
+            <tr v-for="taskDate in  taskDates" :class="taskDate.trClass">
                 <td>{{ taskDate.date }}</td>
                 <td>{{ taskDate.count }}</td>
+                <td>{{ taskDate.totalMinutes }}</td>
                 <td>
                     <router-link :to="{ name: 'tasks.date', params: {date: taskDate.date} }" class="btn btn-secondary btn-sm">
                         <fa icon="info" fixed-width/>
@@ -58,6 +64,7 @@
 <script>
     import axios from "axios";
     import VButton from "../../../components/Button";
+    import {mapGetters} from "vuex";
 
     export default {
         components: {VButton},
@@ -71,12 +78,9 @@
                 taskDates: [/*
                     {
                         date: '2020-06-29',
-                        count: 3
-                    },
-                    {
-                        date: '2020-06-28',
-                        count: 5
-                    }*/
+                        count: 3,
+                        totalMinutes: 120
+                    },*/
                 ]
             };
         },
@@ -88,6 +92,10 @@
                 title: this.$t('history')
             };
         },
+
+        computed: mapGetters({
+            user: 'auth/user'
+        }),
         
         async mounted() {
             await this.fetchDates();
@@ -111,8 +119,17 @@
                 }
                 
                 const {data} = await axios.get(url);
-
-                this.taskDates = data;
+                
+                // determine whether the user achieved his/her goal or not
+                this.taskDates = data.map((date) => {                    
+                    date.trClass = 
+                        (date.totalMinutes >= this.user.working_hours * 60) 
+                            ? 'table-success' 
+                            : 'table-danger';
+                    
+                    return date;
+                });
+                
                 this.loadingDates = false;
             },
             
