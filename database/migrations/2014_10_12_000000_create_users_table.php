@@ -25,6 +25,8 @@ class CreateUsersTable extends Migration
             // roles: regular 'user', user 'manager', 'admin'
             $table->string('role')->default('user');
             
+            $table->softDeletes();
+            
             $table->rememberToken();
             $table->timestamps();
         });

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\User as UserResource;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -32,45 +35,64 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StoreUserRequest $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $validated = $request->validated();
+        
+        $validated['email_verified_at'] = Carbon::now();
+        
+        return User::create($validated);
     }
 
     /**
      * Display the specified resource.
      *
      * @param User $user
-     * @return Response
+     * @return User
      */
     public function show(User $user)
     {
-        //
+        return $user;
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param UpdateUserRequest $request
      * @param User $user
-     * @return Response
+     * @return User
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $validated = $request->validated();
+        
+        // Updating the password is optional
+        if (isset($validated['password'])) {
+            $validated['password'] =  bcrypt($validated['password']);
+        }
+            
+        // Only an admin can set a role (managers only create regular users)
+        if ($request->user()->role !== User::ROLE_ADMIN) {
+            unset($validated['role']);
+        }
+        
+        $user->update($validated);
+
+        return $user;
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param User $user
-     * @return Response
+     * @return void
+     * @throws Exception
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
     }
 }
