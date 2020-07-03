@@ -30,7 +30,9 @@ class ExportController extends Controller
                 $date['tasks'] = $tasks;
                 $date['total'] = $tasks->sum('duration');
                 return $date;
-            });
+            })->toArray();
+        
+        ksort($tasksByDate); // key sort (by date)
         
         // dd($tasksByDate);
         

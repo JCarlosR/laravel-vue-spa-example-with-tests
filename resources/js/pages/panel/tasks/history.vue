@@ -117,8 +117,9 @@
             },
             
             exportFile() {
-                console.log('in development ...');
+                const url = `/api/export?from=${this.dateFrom}&to=${this.dateTo}&format=html`;
+                window.open(url,'_blank');
             }
-        }        
+        }
     }
 </script>
