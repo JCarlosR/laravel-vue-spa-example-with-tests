@@ -64,7 +64,7 @@ class VerificationControllerTest extends TestCase
     }
 
     /** @test */
-    public function testInvalidVerificationIfUrlHasInvalidSignature()
+    public function testVerificationDoesNotProceedIfUrlHasInvalidSignature()
     {
         $user = factory(User::class)->create(['email_verified_at' => null]);
 
@@ -76,7 +76,7 @@ class VerificationControllerTest extends TestCase
     }
 
     /** @test */
-    public function testResendVerificationNotification()
+    public function testResendVerificationNotificationWorksProperly()
     {
         $user = factory(User::class)->create(['email_verified_at' => null]);
 
