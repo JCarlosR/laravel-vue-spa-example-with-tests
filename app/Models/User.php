@@ -84,7 +84,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     }
 
     /**
-     * Send the email verification notification.
+     * Custom notification for the email verification.
      *
      * @return void
      */

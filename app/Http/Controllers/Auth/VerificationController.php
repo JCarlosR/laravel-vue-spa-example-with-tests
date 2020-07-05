@@ -19,7 +19,8 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('throttle:6,1')->only('verify', 'resend');
+        $this->middleware('throttle:6,1')
+            ->only('verify', 'resend');
     }
 
     /**
@@ -48,7 +49,7 @@ class VerificationController extends Controller
         event(new Verified($user));
 
         return response()->json([
-            'status' => trans('verification.verified'),
+            'status' => trans('verification.verified')
         ]);
     }
 
@@ -79,6 +80,8 @@ class VerificationController extends Controller
 
         $user->sendEmailVerificationNotification();
 
-        return response()->json(['status' => trans('verification.sent')]);
+        return response()->json([
+            'status' => trans('verification.sent')
+        ]);
     }
 }
