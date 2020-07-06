@@ -2,13 +2,15 @@
 
 namespace Tests\Browser;
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Models\User;
 use Tests\Browser\Pages\Login;
 use Tests\Browser\Pages\TasksToday;
 use Tests\DuskTestCase;
 use Throwable;
 
-class AuthenticationTest extends DuskTestCase
+/** @see LoginController */
+class LoginControllerTest extends DuskTestCase
 {
     public function setUp(): void
     {

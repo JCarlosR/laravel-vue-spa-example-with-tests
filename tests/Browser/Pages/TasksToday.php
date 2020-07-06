@@ -18,20 +18,6 @@ class TasksToday extends Page
     }
 
     /**
-     * Assert that the browser is on the page.
-     *
-     * @param Browser $browser
-     * @return void
-     * @throws TimeOutException
-     */
-    public function assert(Browser $browser)
-    {
-        $browser
-            ->waitForLocation($this->url())
-            ->assertPathIs($this->url());
-    }
-
-    /**
      * Get the element shortcuts for the page.
      *
      * @return array
