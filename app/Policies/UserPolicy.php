@@ -9,20 +9,23 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    private $rolesThatManageUsers = [
-        User::ROLE_ADMIN,
-        User::ROLE_USER_MANAGER
-    ];
+    private function isAuthorizedRole($user)
+    {
+        return in_array($user->role, [
+            User::ROLE_ADMIN,
+            User::ROLE_USER_MANAGER
+        ]);
+    }
     
     /**
-     * Determine whether the user can view any models.
+     * Determine if the user can list other users.
      *
      * @param User $user
      * @return mixed
      */
     public function viewAny(User $user)
     {
-        return in_array($user->role, $this->rolesThatManageUsers);
+        return $this->isAuthorizedRole($user);
     }
 
     /**
@@ -34,22 +37,22 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return in_array($user->role, $this->rolesThatManageUsers);
+        return $this->isAuthorizedRole($user) || $user->id === $model->id;
     }
 
     /**
-     * Determine whether the user can create models.
+     * Determine if the user can create other users (besides the external register form).
      *
      * @param User $user
      * @return mixed
      */
     public function create(User $user)
     {
-        return in_array($user->role, $this->rolesThatManageUsers);
+        return $this->isAuthorizedRole($user);
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user can update other users data.
      *
      * @param User $user
      * @param User $model
@@ -57,7 +60,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return in_array($user->role, $this->rolesThatManageUsers);
+        return $this->isAuthorizedRole($user) || $user->id === $model->id;
     }
 
     /**
@@ -69,8 +72,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->id === $model->id ||
-            in_array($user->role, $this->rolesThatManageUsers);
+        return $this->isAuthorizedRole($user) || $user->id === $model->id;
     }
 
     /**
@@ -82,7 +84,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        return in_array($user->role, $this->rolesThatManageUsers);
+        return $this->isAuthorizedRole($user) || $user->id === $model->id;
     }
 
     /**
@@ -94,6 +96,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        return in_array($user->role, $this->rolesThatManageUsers);
+        return $this->isAuthorizedRole($user);
     }
 }

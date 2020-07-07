@@ -22,7 +22,7 @@
             </div>
 
             <div class="links">
-                <a href="https://git.toptal.com/screening/juan-carlos-ramos-suyon-2">
+                <a href="https://git.toptal.com/screening/juan-carlos-ramos-suyon-2" target="_blank">
                     Project Repository
                 </a>
             </div>

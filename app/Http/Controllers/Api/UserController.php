@@ -27,9 +27,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(
-            User::all()
-        );
+        $role = auth()->user()->role;
+        
+        if ($role === User::ROLE_ADMIN)
+            $users = User::all();
+        elseif ($role === User::ROLE_USER_MANAGER)
+            $users = User::where('role', User::ROLE_REGULAR_USER)->get();
+        else
+            $users = collect();
+        
+        return UserResource::collection($users);
     }
 
     /**
