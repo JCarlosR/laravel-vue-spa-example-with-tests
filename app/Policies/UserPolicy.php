@@ -60,7 +60,11 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $this->isAuthorizedRole($user) || $user->id === $model->id;
+        if ($model->role === User::ROLE_REGULAR_USER)
+            return $this->isAuthorizedRole($user) || $user->id === $model->id;
+        
+        // special roles can only be updated by admins
+        return $user->role === User::ROLE_ADMIN;
     }
 
     /**
