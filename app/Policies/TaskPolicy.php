@@ -10,6 +10,13 @@ class TaskPolicy
 {
     use HandlesAuthorization;
 
+    private function isAuthorizedRole($user)
+    {
+        return in_array($user->role, [
+            User::ROLE_ADMIN
+        ]);
+    }
+    
     /**
      * Every user can list tasks, as long as they are the owners.
      *
@@ -29,7 +36,8 @@ class TaskPolicy
      */
     public function view(User $user, Task $task)
     {
-        return $task->user_id === $user->id;
+        return $task->user_id === $user->id 
+            || $this->isAuthorizedRole($user);
     }
 
     /**
@@ -51,7 +59,8 @@ class TaskPolicy
      */
     public function update(User $user, Task $task)
     {
-        return $task->user_id === $user->id;
+        return $task->user_id === $user->id
+            || $this->isAuthorizedRole($user);
     }
 
     /**
@@ -63,7 +72,8 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task)
     {
-        return $task->user_id === $user->id;
+        return $task->user_id === $user->id
+            || $this->isAuthorizedRole($user);
     }
 
     /**
@@ -75,7 +85,8 @@ class TaskPolicy
      */
     public function restore(User $user, Task $task)
     {
-        return $task->user_id === $user->id;
+        return $task->user_id === $user->id
+            || $this->isAuthorizedRole($user);
     }
 
     /**
@@ -87,9 +98,7 @@ class TaskPolicy
      */
     public function forceDelete(User $user, Task $task)
     {
-        return in_array($user->role, [
-            User::ROLE_ADMIN,
-            User::ROLE_USER_MANAGER
-        ]);
+        return $task->user_id === $user->id
+            || $this->isAuthorizedRole($user);
     }
 }
