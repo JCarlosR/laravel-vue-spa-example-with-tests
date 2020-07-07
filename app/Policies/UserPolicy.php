@@ -76,7 +76,11 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $this->isAuthorizedRole($user) || $user->id === $model->id;
+        if ($model->role === User::ROLE_REGULAR_USER)
+            return $this->isAuthorizedRole($user) || $user->id === $model->id;
+
+        // special roles can only be deleted by admins
+        return $user->role === User::ROLE_ADMIN;
     }
 
     /**
@@ -88,7 +92,11 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        return $this->isAuthorizedRole($user) || $user->id === $model->id;
+        if ($model->role === User::ROLE_REGULAR_USER)
+            return $this->isAuthorizedRole($user) || $user->id === $model->id;
+
+        // special roles can only be restored by admins
+        return $user->role === User::ROLE_ADMIN;
     }
 
     /**
@@ -100,6 +108,10 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        return $this->isAuthorizedRole($user);
+        if ($model->role === User::ROLE_REGULAR_USER)
+            return $this->isAuthorizedRole($user) || $user->id === $model->id;
+
+        // special roles can only be deleted physically from db by admins
+        return $user->role === User::ROLE_ADMIN;
     }
 }
