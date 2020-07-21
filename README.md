@@ -1,4 +1,4 @@
-# TopTal Technical Screening Project 
+# Laravel & Vue.js SPA example
 
 ## Test project description
 
